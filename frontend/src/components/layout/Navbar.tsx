@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../ui';
+import { LogOut, LayoutDashboard, LogIn, UserPlus, Leaf } from 'lucide-react';
 import type { UserRole } from '../../types';
 
 interface NavbarProps {
@@ -30,7 +31,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <button onClick={onNavigateToHome} className="flex items-center space-x-3 group cursor-pointer">
-            <div className="text-3xl transform group-hover:scale-110 transition-transform">🍃</div>
+            <Leaf size={28} className="text-emerald-400" />
             <span className="text-2xl font-bold bg-linear-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
               FoodShare
             </span>
@@ -41,15 +42,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               <>
                 <button
                   onClick={onNavigateToDashboard}
-                  className="text-gray-300 hover:text-emerald-400 transition-colors font-medium cursor-pointer"
+                  className="text-gray-300 hover:text-emerald-400 transition-colors font-medium cursor-pointer flex items-center space-x-2"
                 >
-                  Dashboard
+                  <LayoutDashboard size={20} />
+                  <span>Dashboard</span>
                 </button>
                 <span className="text-gray-400 px-3 py-1 bg-gray-800 rounded-lg border border-gray-700">
                   {userName} ({userRole})
                 </span>
-                <Button variant="outline" onClick={onLogout} size="sm">
-                  Logout
+                <Button variant="outline" onClick={onLogout} size="sm" className="flex items-center space-x-2">
+                  <LogOut size={18} />
+                  <span>Logout</span>
                 </Button>
               </>
             ) : (
@@ -58,15 +61,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   variant="outline"
                   onClick={() => handleAuthClick('signin')}
                   size="sm"
-                  className="border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 hover:border-gray-500"
+                  className="border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 hover:border-gray-500 flex items-center space-x-2"
                 >
-                  Sign In
+                  <LogIn size={18} />
+                  <span>Sign In</span>
                 </Button>
                 <Button
                   onClick={() => handleAuthClick('signup')}
                   size="sm"
+                  className="flex items-center space-x-2"
                 >
-                  Sign Up
+                  <UserPlus size={18} />
+                  <span>Sign Up</span>
                 </Button>
               </div>
             )}

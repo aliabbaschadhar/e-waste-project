@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../components/ui';
+import { ArrowRight, Users, UtensilsCrossed, TrendingUp, Star, CheckCircle, MapPin, Clock, Package } from 'lucide-react';
 
 interface HomePageProps {
   onNavigateToAuth: (mode?: 'signin' | 'signup') => void;
@@ -24,13 +25,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Button size="lg" onClick={() => onNavigateToAuth('signup')} className="shadow-xl">
-              🚀 Get Started Free
+              Get Started Free
             </Button>
             <Button size="lg" variant="outline" onClick={onNavigateToBrowse}>
-              🍽️ Browse Food Listings
+              Browse Food Listings
             </Button>
           </div>
-          <p className="mt-6 text-sm text-gray-500">✓ No credit card required  •  ✓ Free forever  •  ✓ Make an impact today</p>
+          <p className="mt-6 text-sm text-gray-500">No credit card required  •  Free forever  •  Make an impact today</p>
         </div>
       </section>
 
@@ -72,47 +73,47 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
           <div className="relative">
             <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border-2 border-emerald-100">
               <div className="absolute -top-6 left-8 w-12 h-12 bg-linear-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">1</div>
-              <div className="text-6xl mb-6 mt-4">🍽️</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Restaurants List Food</h3>
+              <UtensilsCrossed size={48} className="text-emerald-600 mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-2">Restaurants List Food</h3>
               <p className="text-gray-600 leading-relaxed">
                 Restaurants easily post surplus food with details about quantity, quality, pickup times, and exact location through our intuitive dashboard.
               </p>
               <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>✓ Quick listing process</li>
-                <li>✓ Set pickup windows</li>
-                <li>✓ Manage inventory</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-emerald-500" />Quick listing process</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-emerald-500" />Set pickup windows</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-emerald-500" />Manage inventory</li>
               </ul>
             </div>
           </div>
-          
+
           <div className="relative">
             <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border-2 border-blue-100">
               <div className="absolute -top-6 left-8 w-12 h-12 bg-linear-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">2</div>
-              <div className="text-6xl mb-6 mt-4">🔍</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Users Browse & Request</h3>
+              <Users size={48} className="text-blue-600 mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-2">Users Browse & Request</h3>
               <p className="text-gray-600 leading-relaxed">
                 Users discover available food nearby, filter by preferences, and submit instant requests for items they need with just a few clicks.
               </p>
               <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>✓ Location-based search</li>
-                <li>✓ Real-time availability</li>
-                <li>✓ Instant notifications</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-blue-500" />Location-based search</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-blue-500" />Real-time availability</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-blue-500" />Instant notifications</li>
               </ul>
             </div>
           </div>
-          
+
           <div className="relative">
             <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-3 border-2 border-purple-100">
               <div className="absolute -top-6 left-8 w-12 h-12 bg-linear-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg">3</div>
-              <div className="text-6xl mb-6 mt-4">🤝</div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Connect & Collect</h3>
+              <Package size={48} className="text-purple-600 mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-2">Connect & Collect</h3>
               <p className="text-gray-600 leading-relaxed">
                 Restaurants approve requests quickly, users receive confirmation, and pick up fresh food at the designated time, reducing waste together.
               </p>
               <ul className="mt-4 space-y-2 text-sm text-gray-500">
-                <li>✓ Fast approval system</li>
-                <li>✓ GPS navigation</li>
-                <li>✓ Pickup verification</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-purple-500" />Fast approval system</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-purple-500" />GPS navigation</li>
+                <li className="flex items-center"><CheckCircle size={16} className="mr-2 text-purple-500" />Pickup verification</li>
               </ul>
             </div>
           </div>
@@ -129,7 +130,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
             <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-linear-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">🏪</div>
+                <div className="w-16 h-16 bg-linear-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">R</div>
                 <h3 className="text-3xl font-bold text-gray-900 ml-4">For Restaurants</h3>
               </div>
               <ul className="space-y-4">
@@ -170,10 +171,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-3xl shadow-lg">👥</div>
+                <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">U</div>
                 <h3 className="text-3xl font-bold text-gray-900 ml-4">For Users</h3>
               </div>
               <ul className="space-y-4">
@@ -234,31 +235,46 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
               </div>
             </div>
             <p className="text-gray-600 italic">"We've reduced our food waste by 60% since joining FoodShare. It's amazing to see our surplus food helping families instead of going to waste."</p>
-            <div className="mt-4 text-yellow-400">⭐⭐⭐⭐⭐</div>
+            <div className="mt-4 flex items-center space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={20} className="fill-yellow-400 text-yellow-400" />
+              ))}
+              <span className="ml-2 text-gray-600 text-sm">(5/5)</span>
+            </div>
           </div>
-          
+
           <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">👩</div>
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-bold text-gray-700">SJ</div>
               <div className="ml-3">
                 <div className="font-bold text-gray-900">Sarah Johnson</div>
                 <div className="text-sm text-gray-500">Community User</div>
               </div>
             </div>
             <p className="text-gray-600 italic">"This app has been a lifesaver for my family. The quality of food is excellent and the pickup process is so easy. Thank you FoodShare!"</p>
-            <div className="mt-4 text-yellow-400">⭐⭐⭐⭐⭐</div>
+            <div className="mt-4 flex items-center space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={20} className="fill-yellow-400 text-yellow-400" />
+              ))}
+              <span className="ml-2 text-gray-600 text-sm">(5/5)</span>
+            </div>
           </div>
-          
+
           <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-2xl">👔</div>
+              <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center font-bold text-gray-700">DL</div>
               <div className="ml-3">
                 <div className="font-bold text-gray-900">David Lee</div>
                 <div className="text-sm text-gray-500">Restaurant Owner</div>
               </div>
             </div>
             <p className="text-gray-600 italic">"Not only are we saving money on disposal costs, but we're also building a stronger connection with our community. It's a win-win!"</p>
-            <div className="mt-4 text-yellow-400">⭐⭐⭐⭐⭐</div>
+            <div className="mt-4 flex items-center space-x-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={20} className="fill-yellow-400 text-yellow-400" />
+              ))}
+              <span className="ml-2 text-gray-600 text-sm">(5/5)</span>
+            </div>
           </div>
         </div>
       </section>
@@ -274,10 +290,10 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
               <Button size="lg" variant="outline" className="bg-white text-emerald-600 hover:bg-emerald-50 shadow-xl border-2 border-white" onClick={() => onNavigateToAuth('signup')}>
-                🎯 Sign Up Now - It's Free
+                Sign Up Now - It's Free
               </Button>
               <Button size="lg" className="bg-emerald-900 hover:bg-emerald-950 shadow-xl" onClick={onNavigateToBrowse}>
-                🔍 Explore Food Listings
+                Explore Food Listings
               </Button>
             </div>
             <p className="mt-8 text-emerald-100 text-sm">Join our growing community • No credit card required • Cancel anytime</p>

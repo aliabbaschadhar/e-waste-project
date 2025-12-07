@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../components/ui';
+import { BarChart3, Package, Clock, MapPin, TrendingUp } from 'lucide-react';
 
 interface RestaurantDashboardProps {
   restaurantName: string;
@@ -79,7 +80,7 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
         <div className="mb-8 bg-white rounded-3xl p-8 shadow-lg border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-extrabold text-gray-900 mb-2">🏪 {restaurantName}</h1>
+              <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{restaurantName}</h1>
               <p className="text-lg text-gray-600">Manage your donations and make an impact</p>
             </div>
             <Button className="hidden md:block">+ New Listing</Button>
@@ -87,36 +88,36 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-2 mb-6 bg-white p-2 rounded-2xl shadow-md">
+        <div className="flex space-x-2 mb-6 bg-white p-2 rounded-2xl shadow-md flex-wrap">
           <button
             onClick={() => setActiveTab('stats')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'stats'
+            className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'stats'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📊 Overview
+            <BarChart3 size={20} />
+            <span>Overview</span>
           </button>
           <button
             onClick={() => setActiveTab('listings')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'listings'
+            className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'listings'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📝 My Listings
+            <Package size={20} />
+            <span>My Listings</span>
           </button>
           <button
             onClick={() => setActiveTab('requests')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'requests'
+            className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'requests'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            🔔 Requests ({pendingRequests.length})
+            <Clock size={20} />
+            <span>Requests ({pendingRequests.length})</span>
           </button>
         </div>
 
@@ -126,28 +127,24 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">📝</div>
                   <div className="text-3xl font-bold text-gray-900">{stats.activeDonations}</div>
                   <div className="text-gray-600">Active Listings</div>
                 </div>
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">✅</div>
                   <div className="text-3xl font-bold text-gray-900">{stats.completedDonations}</div>
                   <div className="text-gray-600">Completed</div>
                 </div>
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">🎯</div>
                   <div className="text-3xl font-bold text-gray-900">{stats.thisMonth}</div>
                   <div className="text-gray-600">This Month</div>
                 </div>
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">🍽️</div>
                   <div className="text-2xl font-bold text-emerald-600">{stats.totalImpact}</div>
                   <div className="text-gray-600">Total Impact</div>
                 </div>
@@ -157,7 +154,7 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
             {/* Impact Chart */}
             <Card>
               <div className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">📈 Impact Overview</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Impact Overview</h3>
                 <div className="space-y-6">
                   <div>
                     <div className="flex justify-between mb-2">
@@ -208,8 +205,8 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                         listing.status === 'AVAILABLE'
                           ? 'success'
                           : listing.status === 'RESERVED'
-                          ? 'warning'
-                          : 'default'
+                            ? 'warning'
+                            : 'default'
                       }
                     >
                       {listing.status}
@@ -219,13 +216,13 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                     <div className="text-sm text-gray-700">
                       {listing.status === 'AVAILABLE' ? (
                         <>
-                          <span className="font-semibold">🕐 Expires:</span> {listing.expiresAt}
-                          <span className="ml-4 font-semibold">📬 {listing.requests} requests</span>
+                          <span className="font-semibold">Expires:</span> {listing.expiresAt}
+                          <span className="ml-4 font-semibold">{listing.requests} requests</span>
                         </>
                       ) : (
                         <>
-                          <span className="font-semibold">👤 Reserved by:</span> {listing.reservedBy}
-                          <span className="ml-4">🕐 Pickup: {listing.pickupTime}</span>
+                          <span className="font-semibold">Reserved by:</span> {listing.reservedBy}
+                          <span className="ml-4">Pickup: {listing.pickupTime}</span>
                         </>
                       )}
                     </div>
@@ -255,8 +252,8 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                     <Badge variant="warning">{request.status}</Badge>
                   </div>
                   <div className="flex space-x-3">
-                    <Button className="flex-1">✅ Approve</Button>
-                    <Button variant="outline" className="flex-1">❌ Reject</Button>
+                    <Button className="flex-1">Approve</Button>
+                    <Button variant="outline" className="flex-1">Reject</Button>
                   </div>
                 </div>
               </Card>

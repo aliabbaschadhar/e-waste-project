@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../components/ui';
+import { Search, Users, Clock, History, MapPin, Package, Utensils } from 'lucide-react';
 
 interface UserDashboardProps {
   userName: string;
@@ -91,21 +92,18 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <div className="p-6 text-center">
-              <div className="text-4xl mb-3">🍽️</div>
-              <div className="text-2xl font-bold text-gray-900">23</div>
-              <div className="text-gray-600">Available Foods</div>
+              <div className="text-2xl font-bold text-gray-900">8</div>
+              <div className="text-gray-600">Available Items</div>
             </div>
           </Card>
           <Card>
             <div className="p-6 text-center">
-              <div className="text-4xl mb-3">📝</div>
               <div className="text-2xl font-bold text-gray-900">2</div>
               <div className="text-gray-600">Pending Requests</div>
             </div>
           </Card>
           <Card>
             <div className="p-6 text-center">
-              <div className="text-4xl mb-3">✅</div>
               <div className="text-2xl font-bold text-gray-900">15</div>
               <div className="text-gray-600">Completed</div>
             </div>
@@ -116,33 +114,32 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
         <div className="flex space-x-2 mb-6 bg-white p-2 rounded-2xl shadow-md">
           <button
             onClick={() => setActiveTab('browse')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'browse'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'browse'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            🔍 Browse Food
+            <Search size={20} />
+            <span>Browse Food</span>
           </button>
           <button
             onClick={() => setActiveTab('requests')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'requests'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'requests'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📋 My Requests
+            <Clock size={20} />
+            <span>My Requests</span>
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'history'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'history'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📚 History
+            History
           </button>
         </div>
 
@@ -159,23 +156,23 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
                   <p className="text-gray-600 text-sm mb-4">{food.description}</p>
                   <div className="space-y-2 mb-6 text-sm">
                     <div className="flex items-center text-gray-700">
-                      <span className="font-semibold mr-2">🏪</span>
-                      {food.restaurant}
+                      <Users size={18} className="mr-2 text-emerald-600 shrink-0" />
+                      <span>{food.restaurant}</span>
                     </div>
                     <div className="flex items-center text-gray-700">
-                      <span className="font-semibold mr-2">📦</span>
-                      {food.quantity}
+                      <Package size={18} className="mr-2 text-blue-600 shrink-0" />
+                      <span>{food.quantity}</span>
                     </div>
                     <div className="flex items-center text-gray-700">
-                      <span className="font-semibold mr-2">🕐</span>
-                      {food.pickupTime}
+                      <Clock size={18} className="mr-2 text-orange-600 shrink-0" />
+                      <span>{food.pickupTime}</span>
                     </div>
                     <div className="flex items-center text-gray-700">
-                      <span className="font-semibold mr-2">📍</span>
-                      {food.location}
+                      <MapPin size={18} className="mr-2 text-red-600 shrink-0" />
+                      <span>{food.location}</span>
                     </div>
                   </div>
-                  <Button className="w-full">🎯 Request Food</Button>
+                  <Button className="w-full">Request Food</Button>
                 </div>
               </Card>
             ))}
@@ -198,8 +195,8 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
                         request.status === 'APPROVED'
                           ? 'success'
                           : request.status === 'PENDING'
-                          ? 'warning'
-                          : 'default'
+                            ? 'warning'
+                            : 'default'
                       }
                     >
                       {request.status}
@@ -220,7 +217,7 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
         {activeTab === 'history' && (
           <Card>
             <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">📚 Pickup History</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Pickup History</h3>
               <div className="space-y-4">
                 {history.map((item) => (
                   <div key={item.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-xl">

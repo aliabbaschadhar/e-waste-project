@@ -43,10 +43,10 @@ export const AdminDashboard: React.FC = () => {
         <div className="mb-8 bg-white rounded-3xl p-8 shadow-lg border border-gray-200">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-extrabold text-gray-900 mb-2">🛡️ Admin Dashboard</h1>
+              <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Admin Dashboard</h1>
               <p className="text-lg text-gray-600">Monitor and manage the FoodShare platform</p>
             </div>
-            <Button className="hidden md:block">📊 Generate Report</Button>
+            <Button className="hidden md:block">Generate Report</Button>
           </div>
         </div>
 
@@ -54,43 +54,39 @@ export const AdminDashboard: React.FC = () => {
         <div className="flex space-x-2 mb-6 bg-white p-2 rounded-2xl shadow-md">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'overview'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'overview'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📊 Overview
+            Overview
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'users'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'users'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            👥 Users
+            Users
           </button>
           <button
             onClick={() => setActiveTab('restaurants')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'restaurants'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'restaurants'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            🏪 Restaurants
+            Restaurants
           </button>
           <button
             onClick={() => setActiveTab('reports')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${
-              activeTab === 'reports'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'reports'
                 ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
                 : 'text-gray-600 hover:bg-gray-100'
-            }`}
+              }`}
           >
-            📋 Reports
+            Reports
           </button>
         </div>
 
@@ -101,7 +97,6 @@ export const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">👥</div>
                   <Badge variant="success" className="mb-2">{stats.usersGrowth}</Badge>
                   <div className="text-3xl font-bold text-gray-900">{stats.totalUsers.toLocaleString()}</div>
                   <div className="text-gray-600">Total Users</div>
@@ -109,7 +104,6 @@ export const AdminDashboard: React.FC = () => {
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">🏪</div>
                   <Badge variant="success" className="mb-2">{stats.restaurantsGrowth}</Badge>
                   <div className="text-3xl font-bold text-gray-900">{stats.totalRestaurants.toLocaleString()}</div>
                   <div className="text-gray-600">Restaurants</div>
@@ -117,7 +111,6 @@ export const AdminDashboard: React.FC = () => {
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">🍽️</div>
                   <Badge variant="success" className="mb-2">{stats.mealsGrowth}</Badge>
                   <div className="text-3xl font-bold text-gray-900">{stats.mealsDonated.toLocaleString()}</div>
                   <div className="text-gray-600">Meals Donated</div>
@@ -125,7 +118,6 @@ export const AdminDashboard: React.FC = () => {
               </Card>
               <Card>
                 <div className="p-6 text-center hover:shadow-xl transition-shadow">
-                  <div className="text-4xl mb-3">📝</div>
                   <Badge variant="success" className="mb-2">{stats.listingsGrowth}</Badge>
                   <div className="text-3xl font-bold text-gray-900">{stats.activeListings}</div>
                   <div className="text-gray-600">Active Listings</div>
@@ -141,10 +133,10 @@ export const AdminDashboard: React.FC = () => {
                   <div className="space-y-4">
                     {recentActivity.map((activity) => (
                       <div key={activity.id} className="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl">
-                        <div className="text-2xl">
-                          {activity.type === 'user' && '👤'}
-                          {activity.type === 'restaurant' && '🏪'}
-                          {activity.type === 'donation' && '🍽️'}
+                        <div className="text-2xl font-bold text-gray-600">
+                          {activity.type === 'user' && 'U'}
+                          {activity.type === 'restaurant' && 'R'}
+                          {activity.type === 'donation' && 'D'}
                         </div>
                         <div className="flex-1">
                           <p className="text-gray-900 font-medium">{activity.message}</p>
@@ -172,8 +164,8 @@ export const AdminDashboard: React.FC = () => {
                             <Badge variant="warning">Pending</Badge>
                           </div>
                           <div className="flex space-x-2">
-                            <Button size="sm" className="flex-1">✅ Approve</Button>
-                            <Button size="sm" variant="outline" className="flex-1">❌ Reject</Button>
+                            <Button size="sm" className="flex-1">Approve</Button>
+                            <Button size="sm" variant="outline" className="flex-1">Reject</Button>
                           </div>
                         </div>
                       ))}
@@ -189,8 +181,8 @@ export const AdminDashboard: React.FC = () => {
           <Card>
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">👥 User Management</h3>
-                <Button variant="outline">🔍 Search Users</Button>
+                <h3 className="text-2xl font-bold text-gray-900">User Management</h3>
+                <Button variant="outline">Search Users</Button>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -234,8 +226,8 @@ export const AdminDashboard: React.FC = () => {
           <Card>
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">🏪 Restaurant Management</h3>
-                <Button variant="outline">🔍 Search Restaurants</Button>
+                <h3 className="text-2xl font-bold text-gray-900">Restaurant Management</h3>
+                <Button variant="outline">Search Restaurants</Button>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
@@ -283,25 +275,21 @@ export const AdminDashboard: React.FC = () => {
           <div className="space-y-6">
             <Card>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">📊 Platform Statistics</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">Platform Statistics</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="p-6 bg-linear-to-br from-emerald-50 to-teal-50 rounded-xl">
-                    <div className="text-4xl mb-2">📈</div>
                     <div className="text-2xl font-bold text-gray-900 mb-1">85%</div>
                     <div className="text-gray-700">Platform Growth (YTD)</div>
                   </div>
                   <div className="p-6 bg-linear-to-br from-blue-50 to-cyan-50 rounded-xl">
-                    <div className="text-4xl mb-2">⭐</div>
                     <div className="text-2xl font-bold text-gray-900 mb-1">4.8/5</div>
                     <div className="text-gray-700">Average Rating</div>
                   </div>
                   <div className="p-6 bg-linear-to-br from-purple-50 to-pink-50 rounded-xl">
-                    <div className="text-4xl mb-2">🎯</div>
                     <div className="text-2xl font-bold text-gray-900 mb-1">92%</div>
                     <div className="text-gray-700">Success Rate</div>
                   </div>
                   <div className="p-6 bg-linear-to-br from-amber-50 to-orange-50 rounded-xl">
-                    <div className="text-4xl mb-2">⚡</div>
                     <div className="text-2xl font-bold text-gray-900 mb-1">18 mins</div>
                     <div className="text-gray-700">Avg Response Time</div>
                   </div>
@@ -311,19 +299,19 @@ export const AdminDashboard: React.FC = () => {
 
             <Card>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">📄 Export Reports</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Export Reports</h3>
                 <div className="space-y-3">
                   <Button className="w-full justify-between">
-                    User Activity Report <span>⬇️</span>
+                    User Activity Report
                   </Button>
                   <Button variant="outline" className="w-full justify-between">
-                    Restaurant Performance Report <span>⬇️</span>
+                    Restaurant Performance Report
                   </Button>
                   <Button variant="outline" className="w-full justify-between">
-                    Donation Statistics Report <span>⬇️</span>
+                    Donation Statistics Report
                   </Button>
                   <Button variant="outline" className="w-full justify-between">
-                    Financial Summary Report <span>⬇️</span>
+                    Financial Summary Report
                   </Button>
                 </div>
               </div>
