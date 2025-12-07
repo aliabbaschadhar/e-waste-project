@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, Heart } from 'lucide-react';
+import { Logo } from '../ui';
 
 export const Footer: React.FC = () => {
   return (
@@ -8,12 +8,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1 space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-emerald-500/10 rounded-full">
-                <Leaf size={24} className="text-emerald-500" />
-              </div>
-              <h3 className="text-xl font-bold bg-linear-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">FoodShare</h3>
-            </div>
+            <Logo size="md" variant="dark" showText={true} />
             <p className="text-sm text-gray-400 leading-relaxed">
               Connecting surplus food with those who need it. Join us in our mission to reduce waste and feed communities.
             </p>

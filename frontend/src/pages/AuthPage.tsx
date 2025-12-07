@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Input, Card } from '../components/ui';
+import { Button, Input, Logo } from '../components/ui';
 import { Users, UtensilsCrossed, Shield, ArrowLeft } from 'lucide-react';
 import type { UserRole } from '../types';
 
@@ -49,8 +49,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
             <ArrowLeft size={20} className="transform group-hover:-translate-x-1 transition-transform" />
             <span className="ml-2">Back to Home</span>
           </button>
-          <div className="mb-4 inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-emerald-500 to-teal-500 rounded-3xl shadow-xl">
-            <span className="text-2xl font-bold text-white">FS</span>
+          <div className="mb-4 flex justify-center">
+            <Logo size="xl" variant="color" showText={false} iconOnly={true} />
           </div>
           <h1 className="text-4xl font-extrabold text-gray-900 mb-3">
             {isSignUp ? 'Join FoodShare' : 'Welcome Back!'}
@@ -72,8 +72,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
                   type="button"
                   onClick={() => setSelectedRole('USER')}
                   className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'USER'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
                     }`}
                 >
                   <Users size={32} className="mb-2" />
@@ -84,8 +84,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
                   type="button"
                   onClick={() => setSelectedRole('RESTAURANT')}
                   className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'RESTAURANT'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
                     }`}
                 >
                   <UtensilsCrossed size={32} className="mb-2" />
@@ -96,8 +96,8 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
                   type="button"
                   onClick={() => setSelectedRole('ADMIN')}
                   className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'ADMIN'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
                     }`}
                 >
                   <Shield size={32} className="mb-2" />

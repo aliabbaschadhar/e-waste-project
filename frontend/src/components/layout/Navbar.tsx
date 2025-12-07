@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from '../ui';
-import { LogOut, LayoutDashboard, LogIn, UserPlus, Leaf } from 'lucide-react';
+import { Button, Logo } from '../ui';
+import { LogOut, LayoutDashboard, LogIn, UserPlus } from 'lucide-react';
 import type { UserRole } from '../../types';
 
 interface NavbarProps {
@@ -30,13 +30,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-emerald-100 shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <button onClick={onNavigateToHome} className="flex items-center space-x-2 group cursor-pointer hover:opacity-90 transition-opacity">
-            <div className="p-2 bg-emerald-100 rounded-full group-hover:bg-emerald-200 transition-colors">
-              <Leaf size={24} className="text-emerald-600" />
-            </div>
-            <span className="text-xl font-bold bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              FoodShare
-            </span>
+          <button onClick={onNavigateToHome} className="cursor-pointer hover:opacity-90 transition-opacity">
+            <Logo size="md" variant="light" showText={true} />
           </button>
 
           <div className="flex items-center gap-4">
