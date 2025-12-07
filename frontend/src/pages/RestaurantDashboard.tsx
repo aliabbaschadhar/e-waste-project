@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../components/ui';
-import { BarChart3, Package, Clock, MapPin, TrendingUp } from 'lucide-react';
+import { BarChart3, Package, Clock, Plus, CheckCircle, XCircle } from 'lucide-react';
 
 interface RestaurantDashboardProps {
   restaurantName: string;
@@ -83,7 +83,10 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
               <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{restaurantName}</h1>
               <p className="text-lg text-gray-600">Manage your donations and make an impact</p>
             </div>
-            <Button className="hidden md:block">+ New Listing</Button>
+            <Button className="hidden md:flex items-center">
+              <Plus size={20} className="mr-2" />
+              <span>New Listing</span>
+            </Button>
           </div>
         </div>
 
@@ -92,8 +95,8 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
           <button
             onClick={() => setActiveTab('stats')}
             className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'stats'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
             <BarChart3 size={20} />
@@ -102,8 +105,8 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
           <button
             onClick={() => setActiveTab('listings')}
             className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'listings'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
             <Package size={20} />
@@ -112,8 +115,8 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
           <button
             onClick={() => setActiveTab('requests')}
             className={`flex-1 min-w-max py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'requests'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
             <Clock size={20} />
@@ -252,8 +255,14 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                     <Badge variant="warning">{request.status}</Badge>
                   </div>
                   <div className="flex space-x-3">
-                    <Button className="flex-1">Approve</Button>
-                    <Button variant="outline" className="flex-1">Reject</Button>
+                    <Button className="flex-1">
+                      <CheckCircle size={18} className="mr-2" />
+                      Approve
+                    </Button>
+                    <Button variant="outline" className="flex-1">
+                      <XCircle size={18} className="mr-2" />
+                      Reject
+                    </Button>
                   </div>
                 </div>
               </Card>

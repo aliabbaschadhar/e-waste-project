@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '../components/ui';
-import { ArrowRight, Users, UtensilsCrossed, TrendingUp, Star, CheckCircle, MapPin, Clock, Package } from 'lucide-react';
+import { ArrowRight, Users, UtensilsCrossed, Star, CheckCircle, Package, Sparkles, Search, Award, TrendingUp, Heart, Shield } from 'lucide-react';
 
 interface HomePageProps {
   onNavigateToAuth: (mode?: 'signin' | 'signup') => void;
@@ -25,9 +25,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
           </p>
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Button size="lg" onClick={() => onNavigateToAuth('signup')} className="shadow-xl">
+              <Sparkles size={20} className="mr-2" />
               Get Started Free
             </Button>
             <Button size="lg" variant="outline" onClick={onNavigateToBrowse}>
+              <Search size={20} className="mr-2" />
               Browse Food Listings
             </Button>
           </div>
@@ -130,40 +132,42 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
             <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-linear-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">R</div>
+                <div className="w-16 h-16 bg-linear-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <UtensilsCrossed size={32} className="text-white" />
+                </div>
                 <h3 className="text-3xl font-bold text-gray-900 ml-4">For Restaurants</h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="text-emerald-500 font-bold text-xl mr-3">✓</span>
+                  <CheckCircle size={20} className="text-emerald-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Reduce Food Waste</span>
                     <p className="text-gray-600 text-sm">Cut disposal costs by 40% and help the environment</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-500 font-bold text-xl mr-3">✓</span>
+                  <Award size={20} className="text-emerald-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Brand Enhancement</span>
                     <p className="text-gray-600 text-sm">Build reputation through social responsibility</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-500 font-bold text-xl mr-3">✓</span>
+                  <TrendingUp size={20} className="text-emerald-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Tax Benefits</span>
                     <p className="text-gray-600 text-sm">Claim deductions for food donations</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-500 font-bold text-xl mr-3">✓</span>
+                  <Shield size={20} className="text-emerald-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Easy Management</span>
                     <p className="text-gray-600 text-sm">Intuitive dashboard with real-time tracking</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-emerald-500 font-bold text-xl mr-3">✓</span>
+                  <Heart size={20} className="text-emerald-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Community Impact</span>
                     <p className="text-gray-600 text-sm">Make a difference in your local community</p>
@@ -174,40 +178,42 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
 
             <div className="bg-white rounded-3xl p-10 shadow-xl hover:shadow-2xl transition-all duration-300">
               <div className="flex items-center mb-6">
-                <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg">U</div>
+                <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Users size={32} className="text-white" />
+                </div>
                 <h3 className="text-3xl font-bold text-gray-900 ml-4">For Users</h3>
               </div>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <span className="text-blue-500 font-bold text-xl mr-3">✓</span>
+                  <Package size={20} className="text-blue-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Quality Food Access</span>
                     <p className="text-gray-600 text-sm">Get fresh meals at no cost from top restaurants</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-500 font-bold text-xl mr-3">✓</span>
+                  <Search size={20} className="text-blue-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Location-Based</span>
                     <p className="text-gray-600 text-sm">Find food near you with GPS-powered search</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-500 font-bold text-xl mr-3">✓</span>
+                  <Heart size={20} className="text-blue-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Environmental Hero</span>
                     <p className="text-gray-600 text-sm">Reduce waste and carbon footprint together</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-500 font-bold text-xl mr-3">✓</span>
+                  <Sparkles size={20} className="text-blue-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">Simple Process</span>
                     <p className="text-gray-600 text-sm">Browse, request, and pickup in just 3 clicks</p>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-500 font-bold text-xl mr-3">✓</span>
+                  <Shield size={20} className="text-blue-500 mt-0.5 mr-3 shrink-0" />
                   <div>
                     <span className="font-semibold text-gray-800">No Hidden Costs</span>
                     <p className="text-gray-600 text-sm">100% free platform, no subscriptions needed</p>
@@ -290,9 +296,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigateToAuth, onNavigate
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
               <Button size="lg" variant="outline" className="bg-white text-emerald-600 hover:bg-emerald-50 shadow-xl border-2 border-white" onClick={() => onNavigateToAuth('signup')}>
+                <Sparkles size={20} className="mr-2" />
                 Sign Up Now - It's Free
               </Button>
               <Button size="lg" className="bg-emerald-900 hover:bg-emerald-950 shadow-xl" onClick={onNavigateToBrowse}>
+                <ArrowRight size={20} className="mr-2" />
                 Explore Food Listings
               </Button>
             </div>

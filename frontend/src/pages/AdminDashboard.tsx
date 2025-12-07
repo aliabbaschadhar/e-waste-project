@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../components/ui';
+import { BarChart3, Users, UtensilsCrossed, FileText, AlertCircle, CheckCircle } from 'lucide-react';
 
 export const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'restaurants' | 'reports'>('overview');
@@ -46,7 +47,10 @@ export const AdminDashboard: React.FC = () => {
               <h1 className="text-4xl font-extrabold text-gray-900 mb-2">Admin Dashboard</h1>
               <p className="text-lg text-gray-600">Monitor and manage the FoodShare platform</p>
             </div>
-            <Button className="hidden md:block">Generate Report</Button>
+            <Button className="hidden md:block">
+              <FileText size={18} className="mr-2" />
+              Generate Report
+            </Button>
           </div>
         </div>
 
@@ -54,39 +58,43 @@ export const AdminDashboard: React.FC = () => {
         <div className="flex space-x-2 mb-6 bg-white p-2 rounded-2xl shadow-md">
           <button
             onClick={() => setActiveTab('overview')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'overview'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'overview'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            Overview
+            <BarChart3 size={20} />
+            <span>Overview</span>
           </button>
           <button
             onClick={() => setActiveTab('users')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'users'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'users'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            Users
+            <Users size={20} />
+            <span>Users</span>
           </button>
           <button
             onClick={() => setActiveTab('restaurants')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'restaurants'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'restaurants'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            Restaurants
+            <UtensilsCrossed size={20} />
+            <span>Restaurants</span>
           </button>
           <button
             onClick={() => setActiveTab('reports')}
-            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all ${activeTab === 'reports'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+            className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'reports'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            Reports
+            <FileText size={20} />
+            <span>Reports</span>
           </button>
         </div>
 
@@ -164,8 +172,14 @@ export const AdminDashboard: React.FC = () => {
                             <Badge variant="warning">Pending</Badge>
                           </div>
                           <div className="flex space-x-2">
-                            <Button size="sm" className="flex-1">Approve</Button>
-                            <Button size="sm" variant="outline" className="flex-1">Reject</Button>
+                            <Button size="sm" className="flex-1">
+                              <CheckCircle size={16} className="mr-1" />
+                              Approve
+                            </Button>
+                            <Button size="sm" variant="outline" className="flex-1">
+                              <AlertCircle size={16} className="mr-1" />
+                              Reject
+                            </Button>
                           </div>
                         </div>
                       ))}

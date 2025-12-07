@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge } from '../components/ui';
-import { Search, Users, Clock, History, MapPin, Package, Utensils } from 'lucide-react';
+import { Search, Users, Clock, MapPin, Package, CheckCircle, ShoppingBag } from 'lucide-react';
 
 interface UserDashboardProps {
   userName: string;
@@ -115,8 +115,8 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
           <button
             onClick={() => setActiveTab('browse')}
             className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'browse'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
             <Search size={20} />
@@ -125,8 +125,8 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
           <button
             onClick={() => setActiveTab('requests')}
             className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'requests'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
             <Clock size={20} />
@@ -135,11 +135,12 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
           <button
             onClick={() => setActiveTab('history')}
             className={`flex-1 py-3 px-6 font-semibold rounded-xl transition-all flex items-center justify-center space-x-2 ${activeTab === 'history'
-                ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
-                : 'text-gray-600 hover:bg-gray-100'
+              ? 'bg-linear-to-r from-emerald-600 to-teal-600 text-white shadow-lg'
+              : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            History
+            <CheckCircle size={20} />
+            <span>History</span>
           </button>
         </div>
 
@@ -172,7 +173,10 @@ export const UserDashboard: React.FC<UserDashboardProps> = ({ userName }) => {
                       <span>{food.location}</span>
                     </div>
                   </div>
-                  <Button className="w-full">Request Food</Button>
+                  <Button className="w-full">
+                    <ShoppingBag size={18} className="mr-2" />
+                    Request Food
+                  </Button>
                 </div>
               </Card>
             ))}
