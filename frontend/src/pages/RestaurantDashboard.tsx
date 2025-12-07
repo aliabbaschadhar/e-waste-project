@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Badge } from '../components/ui';
+import { Card, Button, Badge, Modal, Input } from '../components/ui';
 import { BarChart3, Package, Clock, Plus, CheckCircle, XCircle } from 'lucide-react';
 
 interface RestaurantDashboardProps {
@@ -8,6 +8,9 @@ interface RestaurantDashboardProps {
 
 export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restaurantName }) => {
   const [activeTab, setActiveTab] = useState<'stats' | 'listings' | 'requests'>('stats');
+  const [showNewListingModal, setShowNewListingModal] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [formData, setFormData] = useState({ foodItem: '', quantity: '' });
 
   const stats = {
     totalListings: 12,
@@ -83,7 +86,7 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
               <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{restaurantName}</h1>
               <p className="text-lg text-gray-600">Manage your donations and make an impact</p>
             </div>
-            <Button className="hidden md:flex items-center">
+            <Button className="hidden md:flex items-center" onClick={() => setShowNewListingModal(true)}>
               <Plus size={20} className="mr-2" />
               <span>New Listing</span>
             </Button>
@@ -230,8 +233,12 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                       )}
                     </div>
                     <div className="space-x-2">
-                      <Button variant="outline">Edit</Button>
-                      <Button variant="ghost">Delete</Button>
+                      <Button variant="outline" onClick={() => {
+                        setEditingId(listing.id);
+                        setFormData({ foodItem: listing.foodItem, quantity: listing.quantity });
+                        setShowNewListingModal(true);
+                      }}>Edit</Button>
+                      <Button className="hover:bg-red-500/20 hover:text-red-600 hover:border-red-300 transition-all" variant="ghost" onClick={() => alert('Delete listing: ' + listing.foodItem)}>Delete</Button>
                     </div>
                   </div>
                 </div>
@@ -259,7 +266,7 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
                       <CheckCircle size={18} className="mr-2" />
                       Approve
                     </Button>
-                    <Button variant="outline" className="flex-1">
+                    <Button variant="outline" className="flex-1 hover:bg-red-500/20 hover:text-red-600 hover:border-red-300 transition-all">
                       <XCircle size={18} className="mr-2" />
                       Reject
                     </Button>
@@ -269,6 +276,85 @@ export const RestaurantDashboard: React.FC<RestaurantDashboardProps> = ({ restau
             ))}
           </div>
         )}
+
+        {/* New/Edit Listing Modal */}
+        <Modal isOpen={showNewListingModal} onClose={() => {
+          setShowNewListingModal(false);
+          setEditingId(null);
+          setFormData({ foodItem: '', quantity: '' });
+        }}>
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                {editingId ? 'Edit Listing' : 'Create New Listing'}
+              </h2>
+              <p className="text-gray-600">
+                {editingId ? 'Update your food listing details' : 'Add a new food item to donate'}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Food Item</label>
+                <Input
+                  type="text"
+                  placeholder="e.g., Pizza Slices, Sandwich, Salad..."
+                  value={formData.foodItem}
+                  onChange={(e) => setFormData({ ...formData, foodItem: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Quantity</label>
+                <Input
+                  type="text"
+                  placeholder="e.g., 20 pieces, 5 portions, 10 bowls..."
+                  value={formData.quantity}
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Pickup Time</label>
+                <Input type="time" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                <textarea
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  rows={3}
+                  placeholder="Describe the food items, any allergies, or special notes..."
+                />
+              </div>
+            </div>
+
+            <div className="flex space-x-3 pt-4 border-t border-gray-200">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  setShowNewListingModal(false);
+                  setEditingId(null);
+                  setFormData({ foodItem: '', quantity: '' });
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="flex-1"
+                onClick={() => {
+                  alert(editingId ? 'Listing updated!' : 'Listing created!');
+                  setShowNewListingModal(false);
+                  setEditingId(null);
+                  setFormData({ foodItem: '', quantity: '' });
+                }}
+              >
+                {editingId ? 'Update Listing' : 'Create Listing'}
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
   );
