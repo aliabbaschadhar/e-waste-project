@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, Button, Badge, Input } from '../components/ui';
+import { Search, MapPin, Package, Clock, Users, Filter, ShoppingBag } from 'lucide-react';
 
 export const FoodBrowsePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -69,13 +70,28 @@ export const FoodBrowsePage: React.FC = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <Button>🔍 Search</Button>
+              <Button className="flex items-center space-x-2">
+                <Search size={20} />
+                <span>Search</span>
+              </Button>
             </div>
             <div className="flex gap-2 mt-4">
-              <Button size="sm" variant="outline">All</Button>
-              <Button size="sm" variant="outline">Nearby</Button>
-              <Button size="sm" variant="outline">Available Now</Button>
-              <Button size="sm" variant="outline">Vegetarian</Button>
+              <Button size="sm" variant="outline">
+                <Filter size={16} className="mr-1" />
+                All
+              </Button>
+              <Button size="sm" variant="outline">
+                <MapPin size={16} className="mr-1" />
+                Nearby
+              </Button>
+              <Button size="sm" variant="outline">
+                <Clock size={16} className="mr-1" />
+                Available Now
+              </Button>
+              <Button size="sm" variant="outline">
+                <Package size={16} className="mr-1" />
+                Vegetarian
+              </Button>
             </div>
           </div>
         </Card>
@@ -89,29 +105,32 @@ export const FoodBrowsePage: React.FC = () => {
                   <h3 className="text-xl font-semibold text-gray-900">{food.foodItem}</h3>
                   <Badge variant="success">{food.distance}</Badge>
                 </div>
-                
+
                 <p className="text-gray-600 text-sm mb-4">{food.description}</p>
-                
+
                 <div className="space-y-2 mb-4 text-sm text-gray-600">
                   <div className="flex items-center">
-                    <span className="font-medium mr-2">🏪</span>
-                    {food.restaurant}
+                    <Users size={18} className="mr-2 text-emerald-600 shrink-0" />
+                    <span>{food.restaurant}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="font-medium mr-2">📦</span>
-                    {food.quantity}
+                    <Package size={18} className="mr-2 text-blue-600 shrink-0" />
+                    <span>{food.quantity}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="font-medium mr-2">🕐</span>
-                    {food.pickupTime}
+                    <Clock size={18} className="mr-2 text-orange-600 shrink-0" />
+                    <span>{food.pickupTime}</span>
                   </div>
                   <div className="flex items-center">
-                    <span className="font-medium mr-2">📍</span>
-                    {food.location}
+                    <MapPin size={18} className="mr-2 text-red-600 shrink-0" />
+                    <span>{food.location}</span>
                   </div>
                 </div>
-                
-                <Button className="w-full">Request Food</Button>
+
+                <Button className="w-full">
+                  <ShoppingBag size={18} className="mr-2" />
+                  Request Food
+                </Button>
               </div>
             </Card>
           ))}

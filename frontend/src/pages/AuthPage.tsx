@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Input, Card } from '../components/ui';
+import { Button, Input, Logo } from '../components/ui';
+import { Users, UtensilsCrossed, Shield, ArrowLeft } from 'lucide-react';
 import type { UserRole } from '../types';
 
 interface AuthPageProps {
@@ -20,7 +21,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (isSignUp && formData.password !== formData.confirmPassword) {
       alert('Passwords do not match!');
       return;
@@ -41,15 +42,15 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
     <div className="min-h-screen bg-linear-to-br from-emerald-100 via-teal-100 to-cyan-100 py-16 px-4 flex items-center justify-center">
       <div className="container mx-auto max-w-lg">
         <div className="text-center mb-8">
-          <button 
-            onClick={onNavigateToHome} 
+          <button
+            onClick={onNavigateToHome}
             className="inline-flex items-center text-emerald-700 hover:text-emerald-800 mb-6 font-medium transition-colors group"
           >
-            <span className="transform group-hover:-translate-x-1 transition-transform">←</span>
+            <ArrowLeft size={20} className="transform group-hover:-translate-x-1 transition-transform" />
             <span className="ml-2">Back to Home</span>
           </button>
-          <div className="mb-4 inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-emerald-500 to-teal-500 rounded-3xl shadow-xl">
-            <span className="text-4xl">🍽️</span>
+          <div className="mb-4 flex justify-center">
+            <Logo size="xl" variant="color" showText={false} iconOnly={true} />
           </div>
           <h1 className="text-4xl font-extrabold text-gray-900 mb-3">
             {isSignUp ? 'Join FoodShare' : 'Welcome Back!'}
@@ -70,39 +71,36 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
                 <button
                   type="button"
                   onClick={() => setSelectedRole('USER')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 ${
-                    selectedRole === 'USER'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                  }`}
+                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'USER'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    }`}
                 >
-                  <div className="text-3xl mb-2">👤</div>
+                  <Users size={32} className="mb-2" />
                   <div className="text-sm font-semibold">User</div>
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={() => setSelectedRole('RESTAURANT')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 ${
-                    selectedRole === 'RESTAURANT'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                  }`}
+                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'RESTAURANT'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    }`}
                 >
-                  <div className="text-3xl mb-2">🍽️</div>
+                  <UtensilsCrossed size={32} className="mb-2" />
                   <div className="text-sm font-semibold">Restaurant</div>
                 </button>
-                
+
                 <button
                   type="button"
                   onClick={() => setSelectedRole('ADMIN')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 ${
-                    selectedRole === 'ADMIN'
-                      ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                      : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                  }`}
+                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'ADMIN'
+                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
+                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
+                    }`}
                 >
-                  <div className="text-3xl mb-2">⚙️</div>
+                  <Shield size={32} className="mb-2" />
                   <div className="text-sm font-semibold">Admin</div>
                 </button>
               </div>
@@ -155,7 +153,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
               )}
 
               <Button type="submit" className="w-full mt-6" size="lg">
-                {isSignUp ? '🚀 Create Account' : '🔓 Sign In'}
+                {isSignUp ? 'Create Account' : 'Sign In'}
               </Button>
             </form>
 
