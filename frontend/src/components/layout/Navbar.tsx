@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Logo } from '../ui';
-import { LogOut, LayoutDashboard, LogIn, UserPlus } from 'lucide-react';
+import { LogOut, LogIn, UserPlus, UserCircle } from 'lucide-react';
 import type { UserRole } from '../../types';
 
 interface NavbarProps {
@@ -19,12 +19,26 @@ export const Navbar: React.FC<NavbarProps> = ({
   userName,
   onNavigateToAuth,
   onNavigateToHome,
-  onNavigateToDashboard,
   onLogout,
 }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const handleAuthClick = (mode: 'signin' | 'signup') => {
     onNavigateToAuth(mode);
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-emerald-100 shadow-sm transition-all duration-300">
@@ -37,14 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <>
-                <button
-                  onClick={onNavigateToDashboard}
-                  className="flex items-center space-x-2 text-gray-600 hover:text-emerald-600 transition-colors font-medium px-3 py-2 rounded-md hover:bg-emerald-50"
-                  title="Dashboard"
-                >
-                  <LayoutDashboard size={20} />
-                  <span className="hidden sm:inline">Dashboard</span>
-                </button>
                 <div className="hidden md:flex items-center px-3 py-1.5 bg-gray-100 rounded-full border border-gray-200">
                   <span className="text-sm text-gray-700 font-medium">
                     {userName}
@@ -54,16 +60,42 @@ export const Navbar: React.FC<NavbarProps> = ({
                     {userRole}
                   </span>
                 </div>
-                <Button
-                  variant="outline"
-                  onClick={onLogout}
-                  size="sm"
-                  className="border-gray-200 text-gray-600 hover:text-red-600 hover:bg-red-50 hover:border-red-200 transition-all duration-200"
-                  title="Logout"
-                >
-                  <LogOut size={18} className="sm:mr-2" />
-                  <span className="hidden sm:inline">Logout</span>
-                </Button>
+
+                {/* Profile Dropdown */}
+                <div className="relative flex items-center" ref={dropdownRef}>
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="relative w-10 h-10 rounded-full bg-slate-600 flex items-center justify-center hover:bg-slate-700 transition-colors duration-200 border border-slate-500"
+                  >
+                    {/* Simple User Avatar Icon */}
+                    <UserCircle 
+                      size={24} 
+                      className="text-white" 
+                      strokeWidth={2}
+                    />
+                  </button>
+
+                  {/* Dropdown Menu - Slides in from right aligned with profile */}
+                  {isDropdownOpen && (
+                    <div 
+                      className="absolute left-full ml-2 top-1/2 -translate-y-1/2 animate-slideInRight"
+                      style={{
+                        animation: 'slideInRight 0.2s ease-out forwards'
+                      }}
+                    >
+                      <button
+                        onClick={() => {
+                          onLogout();
+                          setIsDropdownOpen(false);
+                        }}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 bg-white hover:bg-red-50 hover:text-red-600 rounded-lg transition-all duration-200 shadow-lg border border-gray-200 hover:border-red-300 whitespace-nowrap"
+                      >
+                        <LogOut size={16} />
+                        <span className="font-medium">Logout</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <div className="flex items-center gap-3">
@@ -89,6 +121,20 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Add keyframe animation */}
+      <style>{`
+        @keyframes slideInRight {
+          from {
+            opacity: 0;
+            transform: translateX(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </nav>
   );
 };
