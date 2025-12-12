@@ -1,52 +1,48 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-
-// Import routes
-import authRouter from './routes/authRoute';
-import restaurantRouter from './routes/restaurantRoute';
-import foodRouter from './routes/foodRoute';
-import requestRouter from './routes/requestRoute';
-import adminRouter from './routes/adminRoute';
-import notificationRouter from './routes/notificationRoute';
-
-// Import middleware
-import { errorHandler, notFound } from './middleware/errorHandler';
-
-// Load environment variables
-dotenv.config({ path: './src/db/.env' });
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import { prisma } from "./db/client";
+import { createAuthRouter } from "./routes/auth";
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-const PORT = process.env.PORT || 3000;
+// CORS configuration
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check route
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Food Waste Reduction API is running',
-    timestamp: new Date().toISOString(),
-  });
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", message: "Server is running" });
 });
 
-// API routes
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/restaurants', restaurantRouter);
-app.use('/api/v1/food', foodRouter);
-app.use('/api/v1/requests', requestRouter);
-app.use('/api/v1/admin', adminRouter);
-app.use('/api/v1/notifications', notificationRouter);
+// Routes
+app.use("/api/auth", createAuthRouter(prisma));
 
-// Error handling
-app.use(notFound);
-app.use(errorHandler);
+// Error handling middleware
+app.use(
+  (
+    err: Error,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+);
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
-  console.log(`📍 API Base URL: http://localhost:${PORT}/api/v1`);
+  console.log(` Server is running on http://localhost:${PORT}`);
+  console.log(` API Health: http://localhost:${PORT}/health`);
+  console.log(` Auth endpoints: http://localhost:${PORT}/auth`);
 });

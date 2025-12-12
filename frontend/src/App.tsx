@@ -1,40 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar, Footer } from './components';
 import { HomePage, AuthPage, FoodBrowsePage, UserDashboard, RestaurantDashboard, AdminDashboard } from './pages';
-import type { UserRole } from './types';
+import { useAuth } from './services';
 
 type Page = 'home' | 'auth' | 'browse' | 'dashboard';
-
-interface AuthState {
-  isAuthenticated: boolean;
-  userRole: UserRole | null;
-  userName: string | null;
-}
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
-  const [authState, setAuthState] = useState<AuthState>({
-    isAuthenticated: false,
-    userRole: null,
-    userName: null,
-  });
+  const { user, logout } = useAuth();
 
-  const handleLogin = (role: UserRole, name: string) => {
-    setAuthState({
-      isAuthenticated: true,
-      userRole: role,
-      userName: name,
-    });
+  // Redirect to dashboard if logged in and on auth page
+  useEffect(() => {
+    if (user && currentPage === 'auth') {
+      setCurrentPage('dashboard');
+    }
+  }, [user, currentPage]);
+
+  const handleLogin = () => {
     setCurrentPage('dashboard');
   };
 
-  const handleLogout = () => {
-    setAuthState({
-      isAuthenticated: false,
-      userRole: null,
-      userName: null,
-    });
+  const handleLogout = async () => {
+    await logout();
     setCurrentPage('home');
   };
 
@@ -60,15 +48,15 @@ function App() {
       case 'browse':
         return <FoodBrowsePage />;
       case 'dashboard':
-        if (!authState.isAuthenticated) {
+        if (!user) {
           setCurrentPage('home');
           return <HomePage onNavigateToAuth={navigateToAuth} onNavigateToBrowse={navigateToBrowse} />;
         }
-        switch (authState.userRole) {
+        switch (user.role) {
           case 'USER':
-            return <UserDashboard userName={authState.userName || 'User'} />;
+            return <UserDashboard userName={user.name || 'User'} />;
           case 'RESTAURANT':
-            return <RestaurantDashboard restaurantName={authState.userName || 'Restaurant'} />;
+            return <RestaurantDashboard restaurantName={user.name || 'Restaurant'} />;
           case 'ADMIN':
             return <AdminDashboard />;
           default:
@@ -81,10 +69,10 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar 
-        isAuthenticated={authState.isAuthenticated}
-        userRole={authState.userRole}
-        userName={authState.userName}
+      <Navbar
+        isAuthenticated={!!user}
+        userRole={user?.role || null}
+        userName={user?.name || null}
         onNavigateToAuth={navigateToAuth}
         onNavigateToHome={navigateToHome}
         onNavigateToDashboard={() => setCurrentPage('dashboard')}

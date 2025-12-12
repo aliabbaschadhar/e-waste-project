@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input, Logo } from '../components/ui';
 import { Users, UtensilsCrossed, Shield, ArrowLeft } from 'lucide-react';
+import { useAuth } from '../services';
 import type { UserRole } from '../types';
 
 interface AuthPageProps {
@@ -10,6 +11,7 @@ interface AuthPageProps {
 }
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, initialMode = 'signin' }) => {
+  const { signup, login, isLoading, error } = useAuth();
   const [isSignUp, setIsSignUp] = useState(initialMode === 'signup');
   const [selectedRole, setSelectedRole] = useState<UserRole>('USER');
   const [formData, setFormData] = useState({
@@ -18,17 +20,47 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
     password: '',
     confirmPassword: '',
   });
+  const [localError, setLocalError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLocalError(null);
 
-    if (isSignUp && formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+    // Validation
+    if (!formData.email || !formData.password) {
+      setLocalError('Email and password are required');
       return;
     }
 
-    // For demo purposes, we'll just log them in
-    onLogin(selectedRole, formData.name || formData.email.split('@')[0]);
+    if (isSignUp) {
+      if (!formData.name) {
+        setLocalError('Name is required');
+        return;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setLocalError('Passwords do not match');
+        return;
+      }
+      if (formData.password.length < 6) {
+        setLocalError('Password must be at least 6 characters');
+        return;
+      }
+
+      try {
+        await signup(formData.email, formData.password, formData.name, selectedRole);
+        onLogin(selectedRole, formData.name);
+      } catch (err: any) {
+        setLocalError(err.message);
+      }
+    } else {
+      try {
+        await login(formData.email, formData.password);
+        const userName = formData.email.split('@')[0];
+        onLogin(selectedRole, userName);
+      } catch (err: any) {
+        setLocalError(err.message);
+      }
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,137 +70,169 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onNavigateToHome, i
     });
   };
 
+  const displayError = localError || error;
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-emerald-100 via-teal-100 to-cyan-100 py-16 px-4 flex items-center justify-center">
-      <div className="container mx-auto max-w-lg">
-        <div className="text-center mb-8">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 to-slate-800 flex flex-col">
+      {/* Navigation Bar */}
+      <nav className="border-b border-slate-700 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Logo />
+            <span className="text-xl font-bold text-white hidden sm:inline">E-Waste</span>
+          </div>
           <button
             onClick={onNavigateToHome}
-            className="inline-flex items-center text-emerald-700 hover:text-emerald-800 mb-6 font-medium transition-colors group"
+            className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
           >
-            <ArrowLeft size={20} className="transform group-hover:-translate-x-1 transition-transform" />
-            <span className="ml-2">Back to Home</span>
+            <ArrowLeft size={20} />
+            Back
           </button>
-          <div className="mb-4 flex justify-center">
-            <Logo size="xl" variant="color" showText={false} iconOnly={true} />
-          </div>
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-3">
-            {isSignUp ? 'Join FoodShare' : 'Welcome Back!'}
-          </h1>
-          <p className="text-lg text-gray-600">
-            {isSignUp ? 'Create your account and start making a difference' : 'Sign in to continue your journey'}
-          </p>
         </div>
+      </nav>
 
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="p-10">
-            {/* Role Selection */}
-            <div className="mb-8">
-              <label className="block text-base font-semibold text-gray-800 mb-4">
-                Select your role:
-              </label>
-              <div className="grid grid-cols-3 gap-4">
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('USER')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'USER'
-                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                    }`}
-                >
-                  <Users size={32} className="mb-2" />
-                  <div className="text-sm font-semibold">User</div>
-                </button>
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-md">
+          <div className="bg-slate-800 rounded-lg border border-slate-700 shadow-2xl p-8">
+            {/* Header */}
+            <h1 className="text-3xl font-bold text-white mb-2">
+              {isSignUp ? 'Create Account' : 'Welcome Back'}
+            </h1>
+            <p className="text-slate-400 mb-8">
+              {isSignUp ? 'Join us to manage e-waste responsibly' : 'Sign in to your account'}
+            </p>
 
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('RESTAURANT')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'RESTAURANT'
-                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                    }`}
-                >
-                  <UtensilsCrossed size={32} className="mb-2" />
-                  <div className="text-sm font-semibold">Restaurant</div>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedRole('ADMIN')}
-                  className={`p-5 rounded-2xl border-2 transition-all transform hover:scale-105 flex flex-col items-center ${selectedRole === 'ADMIN'
-                    ? 'border-emerald-600 bg-linear-to-br from-emerald-50 to-teal-50 text-emerald-700 shadow-lg'
-                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:shadow-md'
-                    }`}
-                >
-                  <Shield size={32} className="mb-2" />
-                  <div className="text-sm font-semibold">Admin</div>
-                </button>
+            {/* Role Selection for SignUp */}
+            {isSignUp && (
+              <div className="mb-8">
+                <label className="block text-sm font-medium text-slate-300 mb-4">Select your role</label>
+                <div className="grid grid-cols-3 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole('USER')}
+                    className={`p-4 rounded-lg border-2 transition-all ${selectedRole === 'USER'
+                        ? 'border-blue-500 bg-blue-500/10'
+                        : 'border-slate-600 bg-slate-700 hover:border-slate-500'
+                      }`}
+                  >
+                    <Users size={24} className="mx-auto mb-2 text-blue-400" />
+                    <span className="text-sm font-medium text-white">User</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole('RESTAURANT')}
+                    className={`p-4 rounded-lg border-2 transition-all ${selectedRole === 'RESTAURANT'
+                        ? 'border-orange-500 bg-orange-500/10'
+                        : 'border-slate-600 bg-slate-700 hover:border-slate-500'
+                      }`}
+                  >
+                    <UtensilsCrossed size={24} className="mx-auto mb-2 text-orange-400" />
+                    <span className="text-sm font-medium text-white">Restaurant</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedRole('ADMIN')}
+                    className={`p-4 rounded-lg border-2 transition-all ${selectedRole === 'ADMIN'
+                        ? 'border-purple-500 bg-purple-500/10'
+                        : 'border-slate-600 bg-slate-700 hover:border-slate-500'
+                      }`}
+                  >
+                    <Shield size={24} className="mx-auto mb-2 text-purple-400" />
+                    <span className="text-sm font-medium text-white">Admin</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Error Message */}
+            {displayError && (
+              <div className="mb-4 p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
+                <p className="text-red-400 text-sm">{displayError}</p>
+              </div>
+            )}
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {isSignUp && (
-                <Input
-                  label="Full Name"
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Enter your full name"
-                  required
-                />
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Name</label>
+                  <Input
+                    type="text"
+                    name="name"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full"
+                    disabled={isLoading}
+                  />
+                </div>
               )}
 
-              <Input
-                label="Email Address"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-              />
-
-              <Input
-                label="Password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                placeholder="Enter your password"
-                required
-              />
-
-              {isSignUp && (
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Email</label>
                 <Input
-                  label="Confirm Password"
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+                <Input
                   type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
+                  name="password"
+                  placeholder="••••••••"
+                  value={formData.password}
                   onChange={handleInputChange}
-                  placeholder="Confirm your password"
+                  className="w-full"
                   required
+                  disabled={isLoading}
                 />
+              </div>
+
+              {isSignUp && (
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Confirm Password</label>
+                  <Input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="••••••••"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    className="w-full"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
               )}
 
-              <Button type="submit" className="w-full mt-6" size="lg">
-                {isSignUp ? 'Create Account' : 'Sign In'}
+              <Button type="submit" className="w-full mt-6" disabled={isLoading}>
+                {isLoading ? 'Loading...' : isSignUp ? 'Create Account' : 'Sign In'}
               </Button>
             </form>
 
-            {/* Toggle Sign In / Sign Up */}
-            <div className="mt-8 text-center pt-6 border-t border-gray-200">
-              <p className="text-gray-600 text-sm mb-2">
-                {isSignUp ? 'Already have an account?' : "Don't have an account?"}
-              </p>
+            {/* Toggle Form */}
+            <p className="text-center text-slate-400 mt-6">
+              {isSignUp ? 'Already have an account?' : "Don't have an account?"}
               <button
-                onClick={() => setIsSignUp(!isSignUp)}
-                className="text-emerald-600 hover:text-emerald-700 text-base font-semibold hover:underline transition-all"
+                type="button"
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setLocalError(null);
+                }}
+                className="text-blue-400 hover:text-blue-300 font-medium ml-2"
+                disabled={isLoading}
               >
                 {isSignUp ? 'Sign In' : 'Sign Up'}
               </button>
-            </div>
+            </p>
           </div>
         </div>
       </div>
